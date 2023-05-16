@@ -20,7 +20,7 @@ public abstract class FarmlandMixin extends Block {
     // Modified code from https://github.com/GitWither/feather-trampling
     public FarmlandMixin(Settings settings) { super(settings); }
 
-    @Inject(method="onLandedUpon", cancellable = true, at = @At(value = "INVOKE", target = "Lnet/minecraft/block/FarmlandBlock;setToDirt(Lnet/minecraft/entity/Entity;Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V"))
+    @Inject(method="onLandedUpon", cancellable = true, at = @At(value = "INVOKE", target = "Lnet/minecraft/block/FarmlandBlock;setToDirt(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V"))
     public void cancelTrample(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance, CallbackInfo ci) {
 
         if(world.getGameRules().getBoolean(SecureCrops.SECURE_CROPS) && !world.getBlockState(pos.up()).isAir()) {
