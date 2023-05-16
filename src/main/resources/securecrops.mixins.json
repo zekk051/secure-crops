@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.zekk051.securecrops.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "FarmlandMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

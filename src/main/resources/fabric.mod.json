@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "securecrops",
+  "version": "${version}",
+
+  "name": "Secure Crops",
+  "description": "Prevents crops/farmland from being trampled",
+  "authors": [
+    "zekk051"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/secure-crops"
+  },
+
+  "license": "MIT",
+  "icon": "assets/securecrops/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.zekk051.securecrops.SecureCrops"
+    ]
+  },
+  "mixins": [
+    "securecrops.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.19",
+    "fabric-api": "*",
+    "minecraft": "~1.19.4",
+    "java": ">=17"
+  }
+}
