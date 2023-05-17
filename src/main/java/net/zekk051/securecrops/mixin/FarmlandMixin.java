@@ -6,7 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.zekk051.securecrops.SecureCrops;
@@ -20,7 +20,7 @@ public abstract class FarmlandMixin extends Block {
     // Modified code from https://github.com/GitWither/feather-trampling
     public FarmlandMixin(Settings settings) { super(settings); }
 
-    @Inject(method="onLandedUpon", cancellable = true, at = @At(value = "INVOKE", target = "Lnet/minecraft/block/FarmlandBlock;setToDirt(Lnet/minecraft/entity/Entity;Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V"))
+    @Inject(method="onLandedUpon", cancellable = true, at = @At(value = "INVOKE", target = "Lnet/minecraft/block/FarmlandBlock;setToDirt(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V"))
     public void cancelTrample(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance, CallbackInfo ci) {
 
         if(world.getGameRules().getBoolean(SecureCrops.SECURE_CROPS) && !world.getBlockState(pos.up()).isAir()) {
@@ -39,7 +39,7 @@ public abstract class FarmlandMixin extends Block {
 
     public void printDebugMsg(String message, Entity entity) {
         if (FabricLoader.getInstance().isDevelopmentEnvironment() && entity instanceof PlayerEntity) {
-            ((PlayerEntity) entity).sendMessage(Text.literal(message), false);
+            ((PlayerEntity) entity).sendMessage(new LiteralText(message), false);
         }
     }
 }
