@@ -11,6 +11,7 @@ public class SecureCrops implements ModInitializer {
 	// Modified code from https://github.com/A5b84/convenient-mobgriefing
 	public static final GameRules.Key<BooleanRule>
 			SECURE_CROPS = register("secureCrops", true),
+			SECURE_FARMLAND_WITH_CROPS = register("secureFarmlandWithCrops", true),	// Break crop and leave farmland the same
 			SECURE_FARMLAND = register("secureFarmland", false);
 
 	private static GameRules.Key<BooleanRule> register(String name, boolean boolValue) {
