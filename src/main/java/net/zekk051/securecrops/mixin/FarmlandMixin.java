@@ -9,9 +9,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.zekk051.securecrops.SecureCrops;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -21,13 +23,18 @@ public abstract class FarmlandMixin extends Block {
     // Modified code from https://github.com/GitWither/feather-trampling
     public FarmlandMixin(Settings settings) { super(settings); }
 
+    @Shadow
+    private static boolean hasCrop(BlockView world, BlockPos pos) {
+        return false;
+    }
+
     @Inject(method="onLandedUpon", cancellable = true, at = @At(value = "INVOKE", target = "Lnet/minecraft/block/FarmlandBlock;setToDirt(Lnet/minecraft/entity/Entity;Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V"))
     public void cancelTrample(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance, CallbackInfo ci) {
 
         boolean GAMERULE_SECURE_CROPS = world.getGameRules().getBoolean(SecureCrops.SECURE_CROPS);
         boolean GAMERULE_SECURE_FARMLAND_WITH_CROPS = world.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND_WITH_CROPS);
         boolean GAMERULE_SECURE_FARMLAND = world.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND);
-        boolean hasCrop = world.getBlockState(pos.up()).isIn(BlockTags.MAINTAINS_FARMLAND);
+        boolean hasCrop = hasCrop(world, pos);
 
         if(hasCrop && GAMERULE_SECURE_CROPS) {
             ci.cancel();
