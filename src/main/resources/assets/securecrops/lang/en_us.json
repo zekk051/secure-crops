@@ -1,4 +1,5 @@
 {
   "gamerule.secureCrops" : "Secure Crops",
+  "gamerule.secureFarmlandWithCrops" : "Secure Farmland with Crops",
   "gamerule.secureFarmland" : "Secure Farmland"
 }
