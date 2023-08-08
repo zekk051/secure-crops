@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -23,18 +24,33 @@ public abstract class FarmlandMixin extends Block {
     @Inject(method="onLandedUpon", cancellable = true, at = @At(value = "INVOKE", target = "Lnet/minecraft/block/FarmlandBlock;setToDirt(Lnet/minecraft/entity/Entity;Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V"))
     public void cancelTrample(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance, CallbackInfo ci) {
 
-        if(world.getGameRules().getBoolean(SecureCrops.SECURE_CROPS) && !world.getBlockState(pos.up()).isAir()) {
-            super.onLandedUpon(world, state, pos, entity, fallDistance);
+        boolean GAMERULE_SECURE_CROPS = world.getGameRules().getBoolean(SecureCrops.SECURE_CROPS);
+        boolean GAMERULE_SECURE_FARMLAND_WITH_CROPS = world.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND_WITH_CROPS);
+        boolean GAMERULE_SECURE_FARMLAND = world.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND);
+        boolean hasCrop = world.getBlockState(pos.up()).isIn(BlockTags.MAINTAINS_FARMLAND);
+
+        if(hasCrop && GAMERULE_SECURE_CROPS) {
             ci.cancel();
             printDebugMsg("[Debug] Prevented crop trampling", entity);
             return;
         }
-        if(world.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND) && world.getBlockState(pos.up()).isAir()) {
-            super.onLandedUpon(world, state, pos, entity, fallDistance);
+
+        if(hasCrop && GAMERULE_SECURE_FARMLAND_WITH_CROPS) {
+            ci.cancel();
+            breakCrop(world, pos, entity);
+            printDebugMsg("[Debug] Trampled crop, secure farmland", entity);
+            return;
+        }
+
+        if(!hasCrop && GAMERULE_SECURE_FARMLAND) {
             ci.cancel();
             printDebugMsg("[Debug] Prevented farmland trampling", entity);
             return;
         }
+    }
+
+    public void breakCrop(World world, BlockPos pos, Entity entity) {
+        world.breakBlock(pos.up(), true, entity);
     }
 
     public void printDebugMsg(String message, Entity entity) {
