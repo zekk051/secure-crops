@@ -1,11 +1,12 @@
 Features
 --------
-This small vanilla mod prevents crops or farmland from being trampled by mobs and players. Two new gamerules are added.
+This small vanilla mod prevents crops or farmland from being trampled by mobs and players. Three new gamerules are added.
 
 | Gamerule       | Default value |
 |----------------| ------------- |
-| secureCrops    | true |
+| secureCrops    | false |
 | secureFarmland | false |
+| secureFarmlandWithCrops | false |
 
 
 Multiplayer

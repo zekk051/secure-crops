@@ -15,7 +15,7 @@
   "license": "MIT",
   "icon": "assets/securecrops/icon.png",
 
-  "environment": "*",
+  "environment": "server",
   "entrypoints": {
     "main": [
       "net.zekk051.securecrops.SecureCrops"
@@ -26,9 +26,8 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.14.19",
-    "fabric-api": "*",
-    "minecraft": ">=1.20",
-    "java": ">=17"
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
   }
 }
