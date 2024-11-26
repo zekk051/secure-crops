@@ -10,7 +10,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.zekk051.securecrops.SecureCrops;
 import org.spongepowered.asm.mixin.Mixin;
