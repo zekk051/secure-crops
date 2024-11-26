@@ -6,9 +6,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.zekk051.securecrops.SecureCrops;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,9 +32,12 @@ public abstract class FarmlandMixin extends Block {
     @Inject(method="onLandedUpon", cancellable = true, at = @At(value = "INVOKE", target = "Lnet/minecraft/block/FarmlandBlock;setToDirt(Lnet/minecraft/entity/Entity;Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V"))
     public void cancelTrample(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance, CallbackInfo ci) {
 
-        boolean GAMERULE_SECURE_CROPS = world.getGameRules().getBoolean(SecureCrops.SECURE_CROPS);
-        boolean GAMERULE_SECURE_FARMLAND_WITH_CROPS = world.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND_WITH_CROPS);
-        boolean GAMERULE_SECURE_FARMLAND = world.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND);
+        ServerWorld serverWorld = (ServerWorld) world;
+
+        boolean GAMERULE_SECURE_CROPS = serverWorld.getGameRules().getBoolean(SecureCrops.SECURE_CROPS);
+        boolean GAMERULE_SECURE_FARMLAND_WITH_CROPS = serverWorld.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND_WITH_CROPS);
+        boolean GAMERULE_SECURE_FARMLAND = serverWorld.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND);
+
         boolean hasCrop = hasCrop(world, pos);
 
         if(hasCrop && GAMERULE_SECURE_CROPS) {
