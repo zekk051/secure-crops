@@ -2,7 +2,6 @@ plugins {
     `maven-publish`
     id("fabric-loom")
     //id("dev.kikugie.j52j")
-    //id("me.modmuss50.mod-publish-plugin")
 }
 
 class ModData {
@@ -104,58 +103,14 @@ tasks.register<Copy>("buildAndCollect") {
     dependsOn("build")
 }
 
-/*
-publishMods {
-    file = tasks.remapJar.get().archiveFile
-    additionalFiles.from(tasks.remapSourcesJar.get().archiveFile)
-    displayName = "${mod.name} ${mod.version} for $mcVersion"
-    version = mod.version
-    changelog = rootProject.file("CHANGELOG.md").readText()
-    type = STABLE
-    modLoaders.add("fabric")
-
-    dryRun = providers.environmentVariable("MODRINTH_TOKEN")
-        .getOrNull() == null || providers.environmentVariable("CURSEFORGE_TOKEN").getOrNull() == null
-
-    modrinth {
-        projectId = property("publish.modrinth").toString()
-        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
-        minecraftVersions.add(mcVersion)
-        requires {
-            slug = "fabric-api"
-        }
+if (stonecutter.current.isActive) {
+    rootProject.tasks.register("buildActive (${mcVersion})") {
+        group = "project"
+        dependsOn("buildAndCollect")
     }
 
-    curseforge {
-        projectId = property("publish.curseforge").toString()
-        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
-        minecraftVersions.add(mcVersion)
-        requires {
-            slug = "fabric-api"
-        }
+    rootProject.tasks.register("runActive (${mcVersion})") {
+        group = "project"
+        dependsOn(tasks.named("runClient"))
     }
 }
-*/
-/*
-publishing {
-    repositories {
-        maven("...") {
-            name = "..."
-            credentials(PasswordCredentials::class.java)
-            authentication {
-                create<BasicAuthentication>("basic")
-            }
-        }
-    }
-
-    publications {
-        create<MavenPublication>("mavenJava") {
-            groupId = "${property("mod.group")}.${mod.id}"
-            artifactId = mod.version
-            version = mcVersion
-
-            from(components["java"])
-        }
-    }
-}
-*/
