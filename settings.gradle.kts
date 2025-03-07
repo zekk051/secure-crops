@@ -21,6 +21,7 @@ stonecutter {
             "1.20.1",
             "1.21.1"
         )
+        vcsVersion = "1.20.1"
     }
     create(rootProject)
 }
