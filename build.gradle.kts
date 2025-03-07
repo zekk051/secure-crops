@@ -106,7 +106,7 @@ tasks.register<Copy>("buildAndCollect") {
 if (stonecutter.current.isActive) {
     rootProject.tasks.register("buildActive (${mcVersion})") {
         group = "project"
-        dependsOn("buildAndCollect")
+        dependsOn(tasks.named("buildAndCollect"))
     }
 
     rootProject.tasks.register("runActive (${mcVersion})") {
