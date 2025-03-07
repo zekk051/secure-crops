@@ -1,7 +1,7 @@
 plugins {
     `maven-publish`
     id("fabric-loom")
-    //id("dev.kikugie.j52j")
+    id("dev.kikugie.j52j")
 }
 
 class ModData {
@@ -93,7 +93,7 @@ tasks.processResources {
         "mcdep" to mcDep
     )
 
-    filesMatching("fabric.mod.json") { expand(map) }
+    filesMatching("fabric.mod.json5") { expand(map) }
 }
 
 tasks.register<Copy>("buildAndCollect") {
