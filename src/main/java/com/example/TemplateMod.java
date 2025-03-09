@@ -1,31 +1,26 @@
 package com.example;
 
 import net.fabricmc.api.ModInitializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
+import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
+import net.minecraft.world.GameRules;
+import net.minecraft.world.GameRules.BooleanRule;
 
 public class TemplateMod implements ModInitializer {
-    // This logger is used to write text to the console and the log file.
-    // It is considered best practice to use your mod id as the logger's name.
-    // That way, it's clear which mod wrote info, warnings, and errors.
-    public static final Logger LOGGER = LoggerFactory.getLogger("template");
-    public static final String VERSION = /*$ mod_version*/ "0.1.0";
+    // Modified code from https://github.com/A5b84/convenient-mobgriefing
+    public static final GameRules.Key<BooleanRule>
+            SECURE_FARMLAND_AND_CROPS = register("secureFarmlandAndCrops"), // If crop present, secure farmland and crop
+            SECURE_FARMLAND_BREAK_CROPS = register("secureFarmlandBreakCrops"),	// If crop present, secure farmland but trample crop
+            SECURE_FARMLAND_IF_EMPTY = register("secureFarmlandIfEmpty"); // If no crop present, secure farmland
 
+    private static GameRules.Key<BooleanRule> register(String name) {
+        return GameRuleRegistry.register(
+                name, GameRules.Category.MISC,
+                GameRuleFactory.createBooleanRule(false)
+        );
+    }
 
     @Override
     public void onInitialize() {
-        // This code runs as soon as Minecraft is in a mod-load-ready state.
-        // However, some things (like resources) may still be uninitialized.
-        // Proceed with mild caution.
-
-        LOGGER.info("Hello Fabric world!");
-
-        //? if !release
-        LOGGER.warn("I'm still a template!");
-
-        //? if fapi: <0.95 {
-        LOGGER.info("Fabric API is old on this version");
-        LOGGER.info("Please update!");
-        //?}
     }
 }
