@@ -32,6 +32,8 @@
   "depends": {
     "fabricloader": ">=0.15",
     "minecraft": "${mcdep}",
+  },
+  "suggests": {
     //? if >= 1.19.4 {
     "fabric-api": "*",
     //?} else

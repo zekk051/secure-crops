@@ -47,6 +47,7 @@ repositories {
 dependencies {
     fun fapi(vararg modules: String) = modules.forEach {
         modImplementation(fabricApi.module(it, deps["fabric_api"]))
+        include(fabricApi.module(it, deps["fabric_api"]))
     }
 
     minecraft("com.mojang:minecraft:$mcVersion")
@@ -55,7 +56,7 @@ dependencies {
 
     fapi(
         // Add modules from https://github.com/FabricMC/fabric
-        "fabric-lifecycle-events-v1",
+        "fabric-game-rule-api-v1",
     )
 }
 
