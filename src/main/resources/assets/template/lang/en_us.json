@@ -1,0 +1,8 @@
+{
+  "gamerule.secureFarmlandAndCrops": "Secure Farmland and Crops",
+  "gamerule.secureFarmlandAndCrops.description": "If farmland has crops, secure farmland and crops",
+  "gamerule.secureFarmlandBreakCrops": "Secure Farmland but break Crops",
+  "gamerule.secureFarmlandBreakCrops.description": "If farmland has crops, secure farmland but trample crops",
+  "gamerule.secureFarmlandIfEmpty": "Secure Farmland if empty",
+  "gamerule.secureFarmlandIfEmpty.description": "If farmland is empty, secure farmland"
+}

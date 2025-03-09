@@ -57,6 +57,7 @@ dependencies {
     fapi(
         // Add modules from https://github.com/FabricMC/fabric
         "fabric-game-rule-api-v1",
+        "fabric-resource-loader-v0"
     )
 }
 
