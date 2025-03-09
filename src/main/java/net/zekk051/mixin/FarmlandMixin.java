@@ -1,6 +1,6 @@
-package com.example.mixin;
+package net.zekk051.mixin;
 
-import com.example.TemplateMod;
+import net.zekk051.SecureCrops;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -38,9 +38,9 @@ public abstract class FarmlandMixin extends Block {
             /*? if <1.19.4 {*/ /*"Lnet/minecraft/block/FarmlandBlock;setToDirt(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V" *//*?}*/
     ))
     public void cancelTrample(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance, CallbackInfo ci) {
-        boolean GAMERULE_SECURE_FARMLAND_AND_CROPS = world.getGameRules().getBoolean(TemplateMod.SECURE_FARMLAND_AND_CROPS);
-        boolean GAMERULE_SECURE_FARMLAND_BREAK_CROPS = world.getGameRules().getBoolean(TemplateMod.SECURE_FARMLAND_BREAK_CROPS);
-        boolean GAMERULE_SECURE_FARMLAND_IF_EMPTY = world.getGameRules().getBoolean(TemplateMod.SECURE_FARMLAND_IF_EMPTY);
+        boolean GAMERULE_SECURE_FARMLAND_AND_CROPS = world.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND_AND_CROPS);
+        boolean GAMERULE_SECURE_FARMLAND_BREAK_CROPS = world.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND_BREAK_CROPS);
+        boolean GAMERULE_SECURE_FARMLAND_IF_EMPTY = world.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND_IF_EMPTY);
         boolean hasCrop = hasCrop(world, pos);
 
         if(hasCrop && GAMERULE_SECURE_FARMLAND_AND_CROPS) {

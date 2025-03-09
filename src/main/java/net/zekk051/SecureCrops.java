@@ -1,4 +1,4 @@
-package com.example;
+package net.zekk051;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.gamerule.v1.CustomGameRuleCategory;
@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.GameRules.BooleanRule;
 
-public class TemplateMod implements ModInitializer {
+public class SecureCrops implements ModInitializer {
     // Modified code from:
     // https://github.com/A5b84/convenient-mobgriefing
     // https://github.com/FabricMC/fabric/tree/1.21.4/fabric-game-rule-api-v1/src/testmod

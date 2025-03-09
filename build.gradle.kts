@@ -19,8 +19,9 @@ val mod = ModData()
 val deps = ModDependencies()
 val mcVersion = stonecutter.current.version
 val mcDep = property("mod.mc_dep").toString()
+val mcTargets = property("mod.mc_targets").toString()
 
-version = "${mod.version}+$mcVersion"
+version = "${mod.version}+${mcTargets}"
 group = mod.group
 base { archivesName.set(mod.id) }
 
@@ -28,7 +29,7 @@ loom {
     splitEnvironmentSourceSets()
 
     mods {
-        create("template") {
+        create(mod.id) {
             sourceSet(sourceSets["main"])
             sourceSet(sourceSets["client"])
         }

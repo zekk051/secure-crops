@@ -27,4 +27,4 @@ stonecutter {
     create(rootProject)
 }
 
-rootProject.name = "Template"
+rootProject.name = "secure-crops"
