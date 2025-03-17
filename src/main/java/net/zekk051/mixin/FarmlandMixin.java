@@ -1,5 +1,6 @@
 package net.zekk051.mixin;
 
+import net.minecraft.server.world.ServerWorld;
 import net.zekk051.SecureCrops;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
@@ -38,31 +39,33 @@ public abstract class FarmlandMixin extends Block {
             /*? if <1.19.4 {*/ /*"Lnet/minecraft/block/FarmlandBlock;setToDirt(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V" *//*?}*/
     ))
     public void cancelTrample(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance, CallbackInfo ci) {
-        boolean GAMERULE_SECURE_FARMLAND_AND_CROPS = world.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND_AND_CROPS);
-        boolean GAMERULE_SECURE_FARMLAND_BREAK_CROPS = world.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND_BREAK_CROPS);
-        boolean GAMERULE_SECURE_FARMLAND_IF_EMPTY = world.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND_IF_EMPTY);
-        boolean hasCrop = hasCrop(world, pos);
+        if (world instanceof ServerWorld serverWorld) {
+            boolean GAMERULE_SECURE_FARMLAND_AND_CROPS = serverWorld.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND_AND_CROPS);
+            boolean GAMERULE_SECURE_FARMLAND_BREAK_CROPS = serverWorld.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND_BREAK_CROPS);
+            boolean GAMERULE_SECURE_FARMLAND_IF_EMPTY = serverWorld.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND_IF_EMPTY);
+            boolean hasCrop = hasCrop(world, pos);
 
-        if(hasCrop && GAMERULE_SECURE_FARMLAND_AND_CROPS) {
-            ci.cancel();
-            printDebugMsg("Secure farmland and crop", entity);
-            return;
+            if (hasCrop && GAMERULE_SECURE_FARMLAND_AND_CROPS) {
+                ci.cancel();
+                printDebugMsg("Secure farmland and crop", entity);
+                return;
+            }
+
+            if (hasCrop && GAMERULE_SECURE_FARMLAND_BREAK_CROPS) {
+                ci.cancel();
+                breakCrop(world, pos, entity);
+                printDebugMsg("Secure farmland, trample crop", entity);
+                return;
+            }
+
+            if (!hasCrop && GAMERULE_SECURE_FARMLAND_IF_EMPTY) {
+                ci.cancel();
+                printDebugMsg("Secure empty farmland", entity);
+                return;
+            }
+
+            printDebugMsg("Vanilla trample", entity);
         }
-
-        if(hasCrop && GAMERULE_SECURE_FARMLAND_BREAK_CROPS) {
-            ci.cancel();
-            breakCrop(world, pos, entity);
-            printDebugMsg("Secure farmland, trample crop", entity);
-            return;
-        }
-
-        if(!hasCrop && GAMERULE_SECURE_FARMLAND_IF_EMPTY) {
-            ci.cancel();
-            printDebugMsg("Secure empty farmland", entity);
-            return;
-        }
-
-        printDebugMsg("Vanilla trample", entity);
     }
 
     @Unique
