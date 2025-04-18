@@ -38,7 +38,8 @@ public abstract class FarmlandMixin extends Block {
             /*? if >=1.19.4 {*/ "Lnet/minecraft/block/FarmlandBlock;setToDirt(Lnet/minecraft/entity/Entity;Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V" /*?}*/
             /*? if <1.19.4 {*/ /*"Lnet/minecraft/block/FarmlandBlock;setToDirt(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V" *//*?}*/
     ))
-    public void cancelTrample(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance, CallbackInfo ci) {
+    /*? if >=1.21.5 {*/ /*public void cancelTrample(World world, BlockState state, BlockPos pos, Entity entity, double fallDistance, CallbackInfo ci) { *//*?}*/
+    /*? if <1.21.5 {*/ public void cancelTrample(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance, CallbackInfo ci) { /*?}*/
         if (world instanceof ServerWorld serverWorld) {
             boolean GAMERULE_SECURE_FARMLAND_AND_CROPS = serverWorld.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND_AND_CROPS);
             boolean GAMERULE_SECURE_FARMLAND_BREAK_CROPS = serverWorld.getGameRules().getBoolean(SecureCrops.SECURE_FARMLAND_BREAK_CROPS);
