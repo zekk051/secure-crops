@@ -1,0 +1,8 @@
+{
+  "gamerule.secureFarmlandAndCrops": "Protéger les terres labourées et les cultures",
+  "gamerule.secureFarmlandAndCrops.description": "Si la terre est cultivée, protége la terre labourée et les cultures.",
+  "gamerule.secureFarmlandBreakCrops": "Piétiner les cultures",
+  "gamerule.secureFarmlandBreakCrops.description": "Si la terre est cultivée, protège la terre labourée mais détruit les cultures.",
+  "gamerule.secureFarmlandIfEmpty": "Protéger les terres labourées vide",
+  "gamerule.secureFarmlandIfEmpty.description": "Protège la terre labourée, même si elle n'est pas cultivée."
+}
